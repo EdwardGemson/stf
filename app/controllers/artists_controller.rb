@@ -1,8 +1,16 @@
 class ArtistsController < ApplicationController
-  skip_before_action :ensure_current_user
+  skip_before_action :ensure_current_artist
+
+  def index
+    unless current_artist
+      redirect_to login_path
+    else
+      render :index
+    end
+  end
 
   def new
-    @user = Artist.new
+    @artist = Artist.new
   end
 
   def create
@@ -29,7 +37,7 @@ class ArtistsController < ApplicationController
   private
 
   def artist_params
-    params.require(:artist).permit(:name, :password, :password_confirmation)
+    params.require(:artist).permit(:email, :password, :password_confirmation)
   end
 
 end

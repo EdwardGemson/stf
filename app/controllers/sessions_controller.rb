@@ -1,19 +1,19 @@
 class SessionsController < ApplicationController
-  skip_before_action :ensure_current_user
+  skip_before_action :ensure_current_artist
 
   def new
   end
 
   def create
     if request.env["omniauth.auth"]
-      user = User.from_omniauth(env["omniauth.auth"])
-      session[:user_id] = user.id
+      artist = Artist.from_omniauth(env["omniauth.auth"])
+      session[:artist_id] = artist.id
       redirect_to root_url
     else
-      user = User.find_by(name: params[:name])
+      artist = Artist.find_by(email: params[:email])
       if
-        user && user.authenticate(params[:password])
-        session[:user_id] = user.id
+        artist && artist.authenticate(params[:password])
+        session[:artist_id] = artist.id
         flash.notice = "Welcome back to STFU #{artist.name}"
         redirect_to root_path
       else
@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    session[:artist_id] = nil
     redirect_to root_url
   end
 end
