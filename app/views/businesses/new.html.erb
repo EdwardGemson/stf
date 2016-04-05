@@ -1,0 +1,19 @@
+<%= form_for @business do |f|%>
+<fieldset>
+  <legend> Create a Business Account</legend>
+  <div>
+    <%= f.label :name%>
+    <%= f.text_field :name%>
+  </div>
+  <div>
+    <%= f.label :password%>
+    <%= f.password_field :password%>
+  </div>
+  <div>
+    <%= f.label :password_confirmation%>
+    <%= f.password_field :password_confirmation%>
+  </div>
+  <div>
+    <%=f.submit 'Create Profile'%>
+  </div>
+<%end%>
